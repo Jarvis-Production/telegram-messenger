@@ -31,7 +31,23 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Подключение к SQLite
 const database = require('./database/database');
-console.log('✅ SQLite база данных готова к работе');
+
+// Инициализация базы данных
+async function startServer() {
+  try {
+    await database.initDatabase();
+    console.log('✅ SQLite база данных готова к работе');
+    
+    // Запуск сервера
+    server.listen(PORT, () => {
+      console.log(`🚀 Сервер запущен на порту ${PORT}`);
+      console.log(`📱 Мессенджер готов к работе!`);
+    });
+  } catch (error) {
+    console.error('❌ Ошибка инициализации базы данных:', error);
+    process.exit(1);
+  }
+}
 
 // Импорт роутов
 const authRoutes = require('./routes/auth');
@@ -78,9 +94,7 @@ app.use('*', (req, res) => {
 
 const PORT = config.PORT;
 
-server.listen(PORT, () => {
-  console.log(`🚀 Сервер запущен на порту ${PORT}`);
-  console.log(`📱 Мессенджер готов к работе!`);
-});
+// Запуск сервера
+startServer();
 
 module.exports = { app, server, io };
