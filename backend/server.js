@@ -48,6 +48,15 @@ app.use('/api/users', userRoutes);
 app.use('/api/chats', chatRoutes);
 app.use('/api/messages', messageRoutes);
 
+// Health check для Render
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // Socket.io обработчики
 const socketHandler = require('./socket/socketHandler');
 socketHandler(io);
@@ -55,8 +64,8 @@ socketHandler(io);
 // Обработка ошибок
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ 
-    success: false, 
+  res.status(500).json({
+    success: false,
     message: 'Что-то пошло не так!',
     error: process.env.NODE_ENV === 'development' ? err.message : {}
   });
@@ -64,9 +73,9 @@ app.use((err, req, res, next) => {
 
 // 404 обработчик
 app.use('*', (req, res) => {
-  res.status(404).json({ 
-    success: false, 
-    message: 'Маршрут не найден' 
+  res.status(404).json({
+    success: false,
+    message: 'Маршрут не найден'
   });
 });
 

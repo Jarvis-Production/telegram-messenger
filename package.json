@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
+    "build": "npm install",
     "build:ios": "cd ios && xcodebuild -workspace Messenger.xcworkspace -scheme Messenger -configuration Release",
     "build:android": "cd android && ./gradlew assembleRelease",
     "test": "jest",
