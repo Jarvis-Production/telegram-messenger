@@ -26,6 +26,7 @@ public/uploads/
 # База данных
 *.db
 *.sqlite
+backend/database/messenger.db
 
 # iOS
 ios/build/

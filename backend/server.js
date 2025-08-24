@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
@@ -24,17 +23,9 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Подключение к MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/messenger', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Ошибка подключения к MongoDB:'));
-db.once('open', () => {
-  console.log('✅ Подключение к MongoDB установлено');
-});
+// Подключение к SQLite
+const database = require('./database/database');
+console.log('✅ SQLite база данных готова к работе');
 
 // Импорт роутов
 const authRoutes = require('./routes/auth');
