@@ -3,10 +3,16 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const helmet = require('helmet');
-const dotenv = require('dotenv');
+const config = require('./config/config');
 
-// Загрузка переменных окружения
-dotenv.config();
+// Проверка конфигурации
+try {
+  config.validate();
+  console.log('✅ Конфигурация загружена успешно');
+} catch (error) {
+  console.error('❌ Ошибка конфигурации:', error.message);
+  process.exit(1);
+}
 
 const app = express();
 const server = http.createServer(app);
@@ -70,7 +76,7 @@ app.use('*', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT;
 
 server.listen(PORT, () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
