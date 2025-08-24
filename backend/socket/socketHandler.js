@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const Chat = require('../models/Chat');
-const Message = require('../models/Message');
+const User = require('../models/UserSQLite');
+const Chat = require('../models/ChatSQLite');
+const Message = require('../models/MessageSQLite');
 
 // Хранилище активных подключений
 const activeConnections = new Map();

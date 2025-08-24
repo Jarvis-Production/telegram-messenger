@@ -1,6 +1,6 @@
 const express = require('express');
-const Message = require('../models/Message');
-const Chat = require('../models/Chat');
+const Message = require('../models/MessageSQLite');
+const Chat = require('../models/ChatSQLite');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
 
